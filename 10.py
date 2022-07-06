@@ -26,7 +26,27 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
-        pass
+        last_char = ''
+        index = 0
+        for c in p:
+            # 超限
+            if index >= len(s):
+                return False
+            # 通配
+            if c == '.':
+                last_char = c
+                index += 1
+                continue
+            # * 比较麻烦，因为可以匹配0个
+            # .* 更麻烦，应为可能有多钟匹配方案, .*b.*c.*d 这种就很麻烦
+            if c == '*':
+                last_char = '*'
+                index += 1
+                continue
+        # 少
+        if index < len(s) and last_char != '*':
+            return False
+        return True
 
 
 if __name__ == '__main__':

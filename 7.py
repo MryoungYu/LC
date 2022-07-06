@@ -21,7 +21,19 @@ class Solution(object):
         :type x: int
         :rtype: int
         """
-        pass
+        # 没太懂
+        x_str = str(x)
+        xb_str = ""
+        flag = False
+        for i in range(len(x_str)):
+            c = x_str[len(x_str) - 1 - i]
+            if c == '-':
+                flag = True
+            else:
+                xb_str += c
+        if flag:
+            xb_str = '-' + xb_str
+        return int(xb_str)
 
 
 if __name__ == '__main__':

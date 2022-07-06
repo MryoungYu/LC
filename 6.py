@@ -26,7 +26,27 @@ class Solution(object):
         :type numRows: int
         :rtype: str
         """
-        pass
+        ## Solution 1,试最笨的方法
+        output = []
+        for i in range(numRows):
+            output.append([])
+        line_no = 0
+        forward = True
+        for c in s:
+            output[line_no].append(c)
+            if forward:
+                line_no += 1
+                if line_no == numRows - 1:
+                    forward = False
+            else:
+                line_no -= 1
+                if line_no == 0:
+                    forward = True
+        output_str = ""
+        for q in output:
+            output_str += "".join(q)
+        return output_str
+        ## Solution 2. 直接算 index
 
 
 if __name__ == '__main__':

@@ -31,7 +31,32 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        pass
+        num_str = []
+        for i in range(10):
+            num_str.append(str(i))
+        rs = ''
+        start = False
+        flag = False
+        for c in s:
+            if c == " ":
+                continue
+            if c == '-' and start == False:
+                flag = True
+                start = True
+                continue
+            if start and c not in num_str:
+                break
+            if c in ['+', '-']:
+                start = True
+                continue
+            if c in num_str:
+                start = True
+                rs += c
+        if not rs:
+            rs = '0'
+        if flag:
+            rs = '-' + rs
+        return int(rs)
 
 
 if __name__ == '__main__':

@@ -19,17 +19,86 @@ class Solution(object):
                     ar[i].append('0')
         # for ar1 in ar:
             # print("\t".join(ar1))
+        max_len = 0
+        max_start = -1
         for i in range(len(s)):
-            cur_len = len(s) - i
-            for j in range(len(s) - cur_len + 1):
-                # print('-----------------')
-                sum = 0
-                for k in range(cur_len):
-                    # print(j + k, j + cur_len - 1 - k, ar[j + k][j + cur_len - 1 - k])
-                    sum += int(ar[j + k][j + cur_len - 1 - k])
-                if sum == cur_len:
-                    # print(j, cur_len, s[j:(j + cur_len)])
-                    return s[j:j + cur_len]
+            left_cur_len = 0
+            left_cur_start = -1
+            left_flag = False
+
+            right_cur_len = 0
+            right_cur_start = -1
+            right_flag = False
+
+            for j in range(i/2 + 1):
+                k = i - j
+                l1 = len(s) - 1 - k
+                l2 = len(s) - 1 - j
+                # print(" i = %d, j = %d, k = %d, l1 = %d, l2 = %d" % (i,j,k, l1,l2))
+                if ar[k][j] == '1':
+                    if not left_flag:
+                        left_flag = True
+                        left_cur_start = j
+                        left_cur_len += 1
+                    else:
+                        left_cur_len += 1
+                else:
+                    left_cur_start = -1
+                    left_cur_len = 0
+                    left_flag = False
+                if ar[l1][l2] == '1':
+                    if not right_flag:
+                        right_flag = True
+                        right_cur_start = l1
+                        right_cur_len += 1
+                    else:
+                        right_cur_len += 1
+                else:
+                    right_cur_start = -1
+                    right_cur_len = 0
+                    right_flag = False
+            left_real_cur_len = 0
+            right_real_cur_len = 0
+            if left_cur_len > 0:
+                if i % 2 == 0:
+                    left_real_cur_len = 2 * (left_cur_len - 1) + 1
+                else:
+                    left_real_cur_len = 2 * left_cur_len
+            if right_cur_len > 0:
+                if i % 2 == 0:
+                    right_real_cur_len = 2 * (right_cur_len - 1) + 1
+                else:
+                    right_real_cur_len = 2 * right_cur_len
+            if right_real_cur_len >= left_real_cur_len and right_real_cur_len > max_len:
+                max_len = right_real_cur_len
+                max_start = right_cur_start
+            elif left_real_cur_len >= right_real_cur_len  and left_real_cur_len > max_len:
+                max_len = left_real_cur_len
+                max_start = left_cur_start
+            # print("Left : i = %d, j = %d, cur_start = %d, cur_len = %d, real_cur_len = %d" % (i, j, left_cur_start, left_cur_len, left_real_cur_len))
+            # print("Right : i = %d, j = %d, cur_start = %d, cur_len = %d, real_cur_len = %d" % (i, j, right_cur_start, right_cur_len, right_real_cur_len))
+
+            
+        # print("max_start = %d, max_len = %d" % (max_start, max_len))
+        return s[max_start:max_start + max_len]
+
+
+
+
+
+
+
+        # for i in range(len(s)):
+        #     cur_len = len(s) - i
+        #     for j in range(len(s) - cur_len + 1):
+        #         # print('-----------------')
+        #         sum = 0
+        #         for k in range(cur_len):
+        #             # print(j + k, j + cur_len - 1 - k, ar[j + k][j + cur_len - 1 - k])
+        #             sum += int(ar[j + k][j + cur_len - 1 - k])
+        #         if sum == cur_len:
+        #             # print(j, cur_len, s[j:(j + cur_len)])
+        #             return s[j:j + cur_len]
         # max_start = -1
         # max_len = 0
         # total_len = len(s)

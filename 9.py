@@ -21,7 +21,14 @@ class Solution(object):
         :type x: int
         :rtype: bool
         """
-        pass
+        xs = str(x)
+        for i in range(len(xs)):
+            j = len(xs) - i - 1
+            if i == j:
+                break
+            if xs[i] != xs[j]:
+                return False
+        return True
 
 
 if __name__ == '__main__':
